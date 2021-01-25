@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>L1</title>
+		<script src="https://unpkg.com/vue@next"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>{{ product }}</h1>
+			<h6>{{ product }} is a good product.</h6>
+			<p>{{ description }}</p>
+		</div>
+	</body>
+	<script>
+		const app = Vue.createApp({
+			data() {
+				return {
+					product: 'Socks',
+					description: 'This is a description.',
+				};
+			},
+		}).mount('#app');
+	</script>
+</html>

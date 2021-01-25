@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>L4</title>
+		<script src="https://unpkg.com/vue@next"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>{{ product }}</h1>
+			<h6>{{ product }} is a good product.</h6>
+			<p>{{ description }}</p>
+			<p v-if="inventory > 10">In Stock</p>
+			<p v-else-if="inventory <= 10 && inventory >= 1 ">Almost Sold</p>
+			<p v-else>Out of Stock</p>
+			<p v-show="onSale">On Sale</p>
+			<img :src="image" height="200" />
+			<a :href="link" target="_blank">Link</a>
+			<ul>
+				<li v-for="detail in details">{{ detail }}</li>
+			</ul>
+			<div v-for="variant in variants" :key="variant.id">{{ variant.color }}</div>
+			<ul>
+				<li v-for="(size, index) in sizes" :key="index">{{ size }}</li>
+			</ul>
+		</div>
+	</body>
+	<script>
+		const app = Vue.createApp({
+			data() {
+				return {
+					product: 'Socks',
+					description: 'This is a description.',
+					image: './images/socks_blue.jpeg',
+					link: 'https://v3.vuejs.org/',
+					inventory: 100,
+					onSale: true,
+					details: ['50% cotton', '30% wool', '20% polyester'],
+					variants: [
+						{ id: 1001, color: 'blue' },
+						{ id: 1002, color: 'green' },
+					],
+					sizes: ['xs', 'sm', 'md', 'lg', 'xl'],
+				};
+			},
+		}).mount('#app');
+	</script>
+</html>

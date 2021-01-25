@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>L8</title>
+		<script src="https://unpkg.com/vue@next"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>{{ title }}</h1>
+			<p>{{ description }}</p>
+			<p v-if="inventory > 3">In Stock</p>
+			<p v-else-if="inventory <= 3 && inventory >= 1 ">Almost Sold</p>
+			<p v-else>Out of Stock</p>
+			<p v-show="onSale">On Sale</p>
+			<img :src="image" height="200" />
+			<a :href="link" target="_blank">Link</a>
+			<ul>
+				<li v-for="detail in details">{{ detail }}</li>
+			</ul>
+			<div v-for="(variant,index) in variants" :key="variant.id" @mouseover="updateVariant(index)">
+				{{ variant.color }}
+			</div>
+			<ul>
+				<li v-for="(size, index) in sizes" :key="index">{{ size }}</li>
+			</ul>
+			<h3>Cart({{cart}})</h3>
+			<button @click="addToCart" :disabled="inventory < 1">Add to Cart {{ inventory }}</button>
+			<button @click="removeFromCart" :disabled="cart < 1">Remove from Cart</button>
+		</div>
+	</body>
+	<script>
+		const app = Vue.createApp({
+			data() {
+				return {
+					brand: 'Puma',
+					product: 'Socks',
+					description: 'This is a description.',
+					link: 'https://v3.vuejs.org/',
+					onSale: true,
+					details: ['50% cotton', '30% wool', '20% polyester'],
+					variants: [
+						{ id: 1001, color: 'blue', image: './images/socks_blue.jpeg', qty: 5 },
+						{ id: 1002, color: 'green', image: './images/socks_green.jpeg', qty: 0 },
+					],
+					selectedVariant: 0,
+					sizes: ['xs', 'sm', 'md', 'lg', 'xl'],
+					cart: 0,
+				};
+			},
+			methods: {
+				addToCart() {
+					this.cart++;
+					this.variants[this.selectedVariant].qty--;
+				},
+				removeFromCart() {
+					this.cart--;
+					this.variants[this.selectedVariant].qty++;
+				},
+				updateVariant(index) {
+					this.selectedVariant = index;
+				},
+			},
+			computed: {
+				title() {
+					let title = this.brand + ' ' + this.product;
+					title += this.onSale ? ' is on sale' : '';
+					return title;
+				},
+				image() {
+					return this.variants[this.selectedVariant].image;
+				},
+				inventory() {
+					return this.variants[this.selectedVariant].qty;
+				},
+			},
+		}).mount('#app');
+	</script>
+</html>
